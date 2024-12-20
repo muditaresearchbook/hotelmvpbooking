@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.hotel.booking.model.Booking;
+import com.hotel.booking.model.HotelBooking;
 import com.hotel.booking.repository.BookingRepository;
 import com.hotel.booking.service.BookingService;
 
@@ -33,12 +33,12 @@ class BookingApplicationTests {
 	@MockBean
 	private BookingRepository bookingRepository;
 
-	private Booking booking;
+	private HotelBooking booking;
 
 	@BeforeEach
 	void setup() {
-		booking = new Booking();
-		booking.setUser("Test User1");
+		booking = new HotelBooking();
+		booking.setUserName("Test User1");
 		booking.setHotelName("Hotel Texas Test");
 		booking.setHotelAddress("Lane 1, Road Downtown, City Texas 125KN");
 		booking.setCheckInDate("2024-12-20");
@@ -48,32 +48,32 @@ class BookingApplicationTests {
 
 	@Test
 	void testCreateBooking() {
-		when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
-		Booking createdBooking = bookingService.createBooking(booking);
+		when(bookingRepository.save(any(HotelBooking.class))).thenReturn(booking);
+		HotelBooking createdBooking = bookingService.createBooking(booking);
 		assertThat(createdBooking).isNotNull();
-		assertThat(createdBooking.getUser().equals("Test User1"));
+		assertThat(createdBooking.getUserName().equals("Test User1"));
 		verify(bookingRepository, times(1)).save(booking);
 	}
 
 	@Test
 	void testGetBookingById() {
 		when(bookingRepository.findById(anyLong())).thenReturn(Optional.of(booking));
-		Booking foundBooking = bookingService.getBookingById(1L);
+		HotelBooking foundBooking = bookingService.getBookingById(1L);
 		assertThat(foundBooking).isNotNull();
-		assertThat(foundBooking.getUser()).isEqualTo("Test User1");
+		assertThat(foundBooking.getUserName()).isEqualTo("Test User1");
         verify(bookingRepository, times(1)).findById(1L);
 
 	}
 
 	@Test
     void testUpdateBooking() {
-        when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
+        when(bookingRepository.save(any(HotelBooking.class))).thenReturn(booking);
         when(bookingRepository.findById(anyLong())).thenReturn(Optional.of(booking));
 
-        Booking updatedBooking = bookingService.updateBooking(1L, booking);
+        HotelBooking updatedBooking = bookingService.updateBooking(1L, booking);
 
         assertThat(updatedBooking).isNotNull();
-        assertThat(updatedBooking.getUser()).isEqualTo("Test User1");
+        assertThat(updatedBooking.getUserName()).isEqualTo("Test User1");
         verify(bookingRepository, times(1)).save(booking);
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hotel.booking.model.Booking;
+import com.hotel.booking.model.HotelBooking;
 import com.hotel.booking.repository.BookingRepository;
 
 @Service
@@ -14,20 +14,20 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public List<Booking> getMatchingBookings() {
+    public List<HotelBooking> getMatchingBookings() {
         return bookingRepository.findAll(); 
     }
 
-    public Booking createBooking(Booking booking) {
+    public HotelBooking createBooking(HotelBooking booking) {
         return bookingRepository.save(booking);
     }
 
-    public Booking updateBooking(Long id, Booking booking) {
+    public HotelBooking updateBooking(Long id, HotelBooking booking) {
         booking.setId(id);
         return bookingRepository.save(booking);
     }
 
-    public Booking getBookingById(Long id) {
+    public HotelBooking getBookingById(Long id) {
         return bookingRepository.findById(id).orElse(null);
     }
     

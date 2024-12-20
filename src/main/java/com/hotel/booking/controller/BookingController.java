@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotel.booking.model.Booking;
+import com.hotel.booking.model.HotelBooking;
 import com.hotel.booking.service.BookingService;
 
 import io.swagger.annotations.Api;
@@ -28,9 +28,13 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/api/bookings")
 @Api(value="Booking Service APIs", description = "Operations to Interact with Booking Service")
 public class BookingController {
-
     @Autowired
     private BookingService bookingService;
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello World";
+    }
 
     /**
      * 
@@ -46,7 +50,7 @@ public class BookingController {
       @ApiResponse(code = 404, message = "Not Found"),
     })
     @GetMapping("/{id}")
-    public Booking viewBooking(@PathVariable Long id) {
+    public HotelBooking viewBooking(@PathVariable Long id) {
         return bookingService.getBookingById(id);
     }
 
@@ -62,7 +66,7 @@ public class BookingController {
     @ApiResponse(code = 400, message = "Bad Request"),
     @ApiResponse(code = 404, message = "Not Found"),
     })
-    @GetMapping List<Booking> searchBookings(Long bookingId) {
+    @GetMapping List<HotelBooking> searchBookings(Long bookingId) {
         return bookingService.getMatchingBookings();
     }
 
@@ -77,7 +81,7 @@ public class BookingController {
     @ApiResponse(code = 200, message = "Booking Created Successfully"),
     @ApiResponse(code = 400, message = "Bad Request")})
     @PostMapping
-    public Booking createBooking(@RequestBody Booking booking) {
+    public HotelBooking createBooking(@RequestBody HotelBooking booking) {
         return bookingService.createBooking(booking);
     }
 
@@ -93,7 +97,7 @@ public class BookingController {
     @ApiResponse(code = 200, message = "Booking Updated Successfully"),
     @ApiResponse(code = 400, message = "Bad Request")})
     @PutMapping("/{id}")
-    public Booking updateBooking(@PathVariable Long id, @RequestBody Booking booking) {
+    public HotelBooking updateBooking(@PathVariable Long id, @RequestBody HotelBooking booking) {
         return bookingService.updateBooking(id, booking);
     }
 
